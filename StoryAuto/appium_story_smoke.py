@@ -21,7 +21,7 @@ duration = 300 #测试时长
 timeout = 30 #搜索图片的时长
 match_ratio = -1
 c_pos =(360,640)
-threshold = 0.9 #匹配度
+threshold = 0.8 #匹配度
 #def find_loc_by_tmplt(driver,template,threshold=0.90,timeout=30):
 #    start_time = time()
 #    w,h = template.shape[::-1]
@@ -54,12 +54,14 @@ driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 #btn_chapter_start = cv2.imread(path_pattern + 'btn_chapter_start.png',0)
 #btn_chapter_next = cv2.imread(path_pattern + 'btn_chapter_next.png',0)
 patterns = ['btn_zhCN.png','btn_later.png','btn_chapter_start.png','btn_chapter_next.png']
-templates = [cv2.imread(i,0) for i in patterns]
+templates = [cv2.imread(path_pattern+i,0) for i in patterns]
 #print(btn_later.shape)
-while time()-start_time<=timeout:
+last_found_time = time() #开始搜索的时间
+start_time = time() #开始测试的时间
+while time()-start_time<=duration:
     driver.get_screenshot_as_file(temp_scr)
     tmp = cv2.imread(temp_scr,0)
-    search_time = time() #开始搜索的时间
+    match_ratio = -1
     for template in templates:
         w,h = template.shape[::-1]
         res = cv2.matchTemplate(tmp,template,cv2.TM_CCOEFF_NORMED)
@@ -67,13 +69,16 @@ while time()-start_time<=timeout:
         if max_val>match_ratio:
             match_ratio = max_val
             c_position = (max_loc[0] + w/2,max_loc[1]+h/2)
+#    print(match_ratio)
     if match_ratio>=threshold:
         driver.tap([c_position])
         last_found_time = time()
     else:
-        driver.tap(c_pos)
+        driver.tap([c_pos])
+    print(last_found_time)
     if time() - last_found_time>timeout:
-        break
+        pass
+#        break
     sleep(1)
         
 
