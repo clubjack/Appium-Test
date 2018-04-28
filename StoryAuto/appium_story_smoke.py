@@ -22,6 +22,7 @@ timeout = 30 #搜索图片的时长
 match_ratio = -1
 c_pos =(360,640)
 threshold = 0.8 #匹配度
+#android.widget.EditText
 #def find_loc_by_tmplt(driver,template,threshold=0.90,timeout=30):
 #    start_time = time()
 #    w,h = template.shape[::-1]
@@ -58,17 +59,19 @@ templates = [cv2.imread(path_pattern+i,0) for i in patterns]
 #print(btn_later.shape)
 last_found_time = time() #开始搜索的时间
 start_time = time() #开始测试的时间
+template_found = None
 while time()-start_time<=duration:
     driver.get_screenshot_as_file(temp_scr)
     tmp = cv2.imread(temp_scr,0)
     match_ratio = -1
-    for template in templates:
+    for i,template in enumerate(templates):
         w,h = template.shape[::-1]
         res = cv2.matchTemplate(tmp,template,cv2.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
         if max_val>match_ratio:
             match_ratio = max_val
             c_position = (max_loc[0] + w/2,max_loc[1]+h/2)
+        
 #    print(match_ratio)
     if match_ratio>=threshold:
         driver.tap([c_position])
@@ -81,4 +84,14 @@ while time()-start_time<=duration:
 #        break
     sleep(1)
         
-
+def isNameEnter(img):
+    result = False
+    c_position = c_pos
+    template = cv2.imread(path_pattern+'tf_enter_name.png')
+    w,h = template.shape[::-1]
+    res = cv2.matchTemplate(img,template,cv2.TM_CCOEFF_NORMED)
+    min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+    if max_val > 0.9:
+        c_position = (max_loc[0] + w/2,max_loc[1]+h/2)
+        result = True
+    return result,c_position
