@@ -23,3 +23,4 @@ desired_caps['appPackage'] = constant.appPackage
 #desired_caps['app'] = 'D:/Work/Stories/build/story201805211816.apk'
 
 driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+fdslfjsdkl
