@@ -1,0 +1,8 @@
+1.安装appium python client
+pip install Appium-Python-Client
+
+2.安装opencv2
+pip install opencv-contrib-python
+
+3.通过adb查看当前的activity
+adb shell dumpsys activity | findstr "mFocusedActivity"
