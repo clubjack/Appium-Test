@@ -5,6 +5,10 @@ Created on Fri Sep  7 20:25:37 2018
 @author: chen.jiankai
 """
 from Action import Action
+actions = [(1001,[(100,200)]),
+           ()]
 def getActions(driver):
-    return [Action(driver,1001,([(100,200)])),
-            Action(driver,1002,())]
+    result = []
+    for action in actions:
+        result.append(Action(driver,action[0],action[1:]))
+    return result

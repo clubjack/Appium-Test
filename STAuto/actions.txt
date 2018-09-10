@@ -1,3 +1,4 @@
 action列表
+1000    sleep seconds
 1001    tap [(x,y)]
 1002    find&setvalue find_element_by_class_name
