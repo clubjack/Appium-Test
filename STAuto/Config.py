@@ -229,5 +229,5 @@ actions = [(1001, [(100, 200)]),
 def getActions(driver):
     result = []
     for action in actions:
-        result.append(Action(driver,action[0],action[1:]))
+        result.append(Action(driver,action[0],*action[1:]))
     return result

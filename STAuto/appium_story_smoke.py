@@ -25,7 +25,7 @@ def main():
     desired_caps['appPackage'] = constant.appPackage
     #desired_caps['app'] = 'D:/Work/Stories/build/story201805211816.apk' 
     driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-    actions = getActions()
+    actions = getActions(driver)
     for action in actions:
         action.perform()
 if __name__ == '__main__':
