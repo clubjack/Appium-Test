@@ -17,5 +17,9 @@ class Action():
             self.driver.tap(self.actionParams[0])
         elif self.actionType == 1002:
             self.driver.find_element_by_class_name(self.actionParams[0]).setValue(self.actionParams[1])
+        elif self.actionType == 1003:
+            self.driver.find_element_by_class_name(self.actionParams[0]).clear()
+        elif self.actionType ==1004:
+            self.driver.find_element_by_class_name(self.actionParams[0]).click()
         else:
             pass
